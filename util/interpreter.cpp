@@ -2,7 +2,12 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#if !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32)
 #include <unistd.h>
+#else
+#include <windows.h>
+#define sleep(x) Sleep((x)*1000)
+#endif
 using namespace std;
 
 #include "device_c.hpp"

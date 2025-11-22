@@ -21,10 +21,7 @@
  */
 #include "serial_port.hpp"
 #include <cstdio>
-#include <sys/types.h>
 #include <cstdlib>
-#include <sys/time.h>
-#include <unistd.h>
 #include <cmath>
 #include <string>
 #define WIN32_LEAN_AND_MEAN
@@ -154,9 +151,15 @@ size_t serial_port::p_read( uint8_t * data, size_t size )
 
 uint64_t serial_port::getTime( void )
 {
-    timeval tv;
-    gettimeofday( &tv, NULL );
-    return (uint64_t)tv.tv_sec * 1000000 + (uint64_t)tv.tv_usec ;
+    FILETIME ft;
+    ULARGE_INTEGER uli;
+
+    GetSystemTimeAsFileTime(&ft);
+    uli.LowPart = ft.dwLowDateTime;
+    uli.HighPart = ft.dwHighDateTime;
+
+    // Convert from 100-nanosecond intervals to microseconds
+    return uli.QuadPart / 10;
 }
 
 

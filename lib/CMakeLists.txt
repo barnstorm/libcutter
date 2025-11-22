@@ -29,7 +29,10 @@ set(cutter_files
 )
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    list(REMOVE_AT cutter_files list(FIND serial_port.cpp))
+    list(FIND cutter_files "serial_port.cpp" _index)
+    if(NOT _index EQUAL -1)
+        list(REMOVE_AT cutter_files ${_index})
+    endif()
     list(APPEND cutter_files serial_port_win32.cpp)
 endif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 

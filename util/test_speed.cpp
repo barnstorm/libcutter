@@ -1,4 +1,8 @@
+#if !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32)
 #include <sys/time.h>
+#else
+#include <windows.h>
+#endif
 #include <device_c.hpp>
 #include <iostream>
 #include <signal.h>
@@ -16,9 +20,18 @@ void clean_up(int signal)
 
 uint64_t getCurTime( void )
 {
+#if !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32)
     timeval tv;
     gettimeofday( &tv, NULL );
     return (uint64_t)tv.tv_sec * 1000000 + (uint64_t)tv.tv_usec ;
+#else
+    FILETIME ft;
+    ULARGE_INTEGER uli;
+    GetSystemTimeAsFileTime(&ft);
+    uli.LowPart = ft.dwLowDateTime;
+    uli.HighPart = ft.dwHighDateTime;
+    return uli.QuadPart / 10; // Convert from 100-nanosecond intervals to microseconds
+#endif
 }
 
 double sqr( double x )

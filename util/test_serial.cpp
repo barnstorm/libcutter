@@ -28,7 +28,9 @@
 #include <vector>
 #include <signal.h>
 #include <stdlib.h>
+#if !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32)
 #include <unistd.h>
+#endif
 
 using std::printf;
 using std::cout;

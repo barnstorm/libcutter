@@ -1,4 +1,5 @@
 //This file adapted from http://sites.google.com/site/drbobbobswebsite/cricut-gcode-interpreter
+#define _USE_MATH_DEFINES
 #include <errno.h>
 #include <cmath>
 #include <map>
@@ -404,7 +405,10 @@ xy gcode::get_xy(std::map<char,float> & codes)
 
 xy gcode::get_vector(std::map<char,float> & codes)
 {
-	return (xy){ doc_to_internal(codes['I']), doc_to_internal(codes['J']) };
+	xy result;
+	result.x = doc_to_internal(codes['I']);
+	result.y = doc_to_internal(codes['J']);
+	return result;
 }
 
 void gcode::process_movement(std::map<char,float> & codes)

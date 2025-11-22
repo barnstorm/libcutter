@@ -1,4 +1,6 @@
+#if !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32)
 #include <sys/time.h>
+#endif
 #include <device_c.hpp>
 #include <iostream>
 #include <signal.h>

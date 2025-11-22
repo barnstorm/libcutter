@@ -26,7 +26,7 @@
 #include "serial_port.hpp"
 #include <vector>
 
-#if( __WIN32 )
+#if( defined(_WIN32) || defined(_WIN64) || defined(WIN32) )
 #define sleep(x) Sleep(x*1000)
 #endif
 

@@ -24,7 +24,7 @@
 #include <cstring>
 #include <stdint.h>
 
-#if( !__WIN32 )
+#if( !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32) )
 #include <termios.h>
 #if( __linux )
 #include <linux/serial.h>
@@ -58,7 +58,7 @@ class serial_port
 
     protected:
         int debug;
-    #if( !__WIN32 )
+    #if( !defined(_WIN32) && !defined(_WIN64) && !defined(WIN32) )
         int  fd;
 
         termios       oldtio;

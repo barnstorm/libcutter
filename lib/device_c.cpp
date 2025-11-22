@@ -29,12 +29,24 @@
 
 static inline uint32_t htocl( const uint32_t input );
 
-struct __attribute__(( packed )) lmc_command
+#if defined(_MSC_VER)
+#pragma pack(push, 1)
+#endif
+
+struct
+#if defined(__GNUC__) || defined(__clang__)
+__attribute__(( packed ))
+#endif
+lmc_command
 {
     uint8_t  bytes;
     uint8_t  cmd;
     uint32_t data[3];
 };
+
+#if defined(_MSC_VER)
+#pragma pack(pop)
+#endif
 
 namespace Device
 {
